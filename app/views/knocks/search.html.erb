@@ -1,0 +1,51 @@
+<h1>Search knocks</h1>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<style>
+  h3 {margin-bottom: 3px;}
+  a {text-decoration: none;}
+  em {background: yellow;}
+</style>
+
+<%= form_tag(search_knocks_path, method: :get) do %>
+  <%= text_field_tag :q, params[:q] %>
+  <%= submit_tag 'Search', name: nil %>
+<% end %>
+
+<% if @knocks %>
+  <figure style="display: flex; flex-wrap: wrap; margin: 40px 0 0 0;">
+    <% colors = ['cyan', 'blue', 'green']
+    ['gender', 'race', 'neighborhood'].each_with_index do |demographic, n|
+      c = colors[n]
+      data = demographic_totals(@knocks, demographic).unshift(['Demographic', 'Number']) %>
+      <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+          var data = google.visualization.arrayToDataTable(<%= data.to_s.html_safe %>);
+          var options = {
+            title: '<%= demographic.titleize %>',
+            chartArea: {'width': '90%', 'height': '100%'},
+            colors: ['dark<%= c %>', '<%= c %>', 'light<%= c %>', 'gray']
+          };
+          var chart = new google.visualization.PieChart(document.getElementById('piechart<%= demographic %>'));
+          chart.draw(data, options);
+        }
+      </script>
+      <div id="piechart<%= demographic %>" style="width: 220px;"></div>
+    <% end %>
+  </figure>
+  <h2><%= @knocks.count %> results</h2>
+  <% @knocks.each do |knock| %>
+    <p>
+      <h3><%= link_to "#{knock.canvasser.name} knocked #{knock.door.address}", knock %></h3>
+      <%= knock.resident_name %> | <%= knock.gender %> | <%= knock.race %> | <%= knock.when.to_s.split(' ').first %><br />
+      <ul>
+        <% for answer in @answers[knock.id] %>
+          <li><b><%= @questions.select{|q| q.id == answer.try(:question_id) }.first.description %>:</b>
+            <%= answer.try(:highlight).try(:short_answer).to_a.join('-').html_safe %> <%= answer.try(:highlight).try(:notes).to_a.join('-').html_safe %>
+          </li>
+        <% end %>
+      </ul>
+    </p>
+  <% end %>
+<% end %>

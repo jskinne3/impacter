@@ -1,0 +1,47 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Knocks</h1>
+
+<%= link_to "Search", search_knocks_path %>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <th>Canvasser</th>
+      <th>Address</th>
+      <th>Neighborhood</th>
+      <th>Resident</th>
+      <th>Followup</th>
+      <th>Language</th>
+      <th>Race</th>
+      <th>Gender</th>
+      <th>Contact</th>
+    </tr>
+    <% @knocks.each do |knock| %>
+      <tr>
+        <td><%= knock.canvasser.name %></td>
+        <td><%= knock.door.address %> <%= knock.door.zip %></td>
+        <td><%= knock.neighborhood %></td>
+        <td><%= knock.resident_name %></td>
+        <td><%= knock.followup %></td>
+        <td><%= knock.language %></td>
+        <td><%= knock.race %></td>
+        <td><%= knock.gender %></td>
+        <td><%= knock.contact %></td>
+        <td><%= link_to 'Show', knock %></td>
+        <td><%= link_to 'Edit', edit_knock_path(knock) %></td>
+        <td><%= link_to 'Destroy', knock, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Knock', new_knock_path %>

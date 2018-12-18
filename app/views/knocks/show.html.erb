@@ -1,0 +1,21 @@
+<p id="notice"><%= notice %></p>
+
+<h1><%= @knock.door.address %></h1>
+<p><%= @knock.canvasser.name %> spoke to <%= @knock.resident_name %> at <%= @knock.when %></p>
+
+<h2>Answers to questions</h2>
+<ul>
+	<% for answer in @knock.answers.reverse %>
+	  <li>
+      <b><%= answer.question.description %>: </b><%= answer.short_answer %><br />
+      <%= answer.notes %>
+    </li>
+  <% end %>
+</ul>
+
+<% @knock.attributes.each do |n,v| %>
+  <p><%= n %>:<br /><%= v %></p>
+<% end %>
+
+<%= link_to 'Edit', edit_knock_path(@knock) %> |
+<%= link_to 'Back', knocks_path %>

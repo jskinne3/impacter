@@ -1,0 +1,9 @@
+class CreateCanvassers < ActiveRecord::Migration[5.2]
+  def change
+    create_table :canvassers do |t|
+      t.string :name
+
+      t.timestamps
+    end
+  end
+end
