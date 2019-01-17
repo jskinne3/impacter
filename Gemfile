@@ -18,6 +18,8 @@ gem 'uglifier', '>= 1.3.0'
 
 # Elasticsearch gem added by John 7 Dec 2018
 gem 'elasticsearch-model'
+# Devise added on 17 Jan 2019
+gem 'devise'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'

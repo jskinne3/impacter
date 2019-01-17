@@ -1,4 +1,5 @@
 class KnocksController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_knock, only: [:show, :edit, :update, :destroy]
 
   # GET /knocks
