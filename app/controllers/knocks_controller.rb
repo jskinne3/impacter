@@ -8,13 +8,21 @@ class KnocksController < ApplicationController
   end
 
   def search
-    if params[:q]
+    # set up search form options
+    @canvassers = Canvasser.all
+    @neighborhoods = Knock.select(:neighborhood).map(&:neighborhood).uniq
+    # if the user is asking for a text search
+    unless params[:q].blank?
       results = Answer.search(params[:q])
       @questions = Question.where(id: results.map{|r| r.try(:question_id)}.uniq)
       @answers = results.group_by{|r| r.try(:knock_id)}
       knock_ids = @answers.map{|id,v| id}
-      @knocks = Knock.where(id: knock_ids)
     end
+    # build query from what the user has asked for
+    @knocks = Knock.all
+    @knocks = @knocks.where(id: knock_ids) if knock_ids
+    @knocks = @knocks.where(canvasser_id: params[:canvasser][:id]) unless params[:canvasser][:id].blank? if params[:canvasser]
+    @knocks = @knocks.where(neighborhood: params[:neighborhood]) unless params[:neighborhood].blank?
   end
 
   # GET /knocks/1

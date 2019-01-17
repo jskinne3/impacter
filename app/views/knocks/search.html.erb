@@ -7,8 +7,13 @@
 </style>
 
 <%= form_tag(search_knocks_path, method: :get) do %>
-  <%= text_field_tag :q, params[:q] %>
-  <%= submit_tag 'Search', name: nil %>
+  <p>
+    <%= text_field_tag :q, params[:q], {placeholder: "Includes text"} %>
+    <%= collection_select(:canvasser, :id, @canvassers, :id, :name, {prompt: 'Canvassed by', selected: (params[:canvasser][:id] if params[:canvasser])}) %>
+    <%= select_tag(:neighborhood, options_for_select(@neighborhoods, params[:neighborhood]), {prompt: 'Neighborhood'}) %>
+  </p>
+
+  <%= submit_tag 'Results', name: nil %>
 <% end %>
 
 <% if @knocks %>
@@ -39,13 +44,15 @@
     <p>
       <h3><%= link_to "#{knock.canvasser.name} knocked #{knock.door.address}", knock %></h3>
       <%= knock.resident_name %> | <%= knock.gender %> | <%= knock.race %> | <%= knock.when.to_s.split(' ').first %><br />
-      <ul>
-        <% for answer in @answers[knock.id] %>
-          <li><b><%= @questions.select{|q| q.id == answer.try(:question_id) }.first.description %>:</b>
-            <%= answer.try(:highlight).try(:short_answer).to_a.join('-').html_safe %> <%= answer.try(:highlight).try(:notes).to_a.join('-').html_safe %>
-          </li>
-        <% end %>
-      </ul>
+      <% if @answers %>
+        <ul>
+          <% for answer in @answers[knock.id] %>
+            <li><b><%= @questions.select{|q| q.id == answer.try(:question_id) }.first.description %>:</b>
+              <%= answer.try(:highlight).try(:short_answer).to_a.join('-').html_safe %> <%= answer.try(:highlight).try(:notes).to_a.join('-').html_safe %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
     </p>
   <% end %>
 <% end %>

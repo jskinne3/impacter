@@ -91,14 +91,14 @@ csv.each do |row|
     zip: row['Zip Code']
   )
   canvasser = Canvasser.find_or_create_by(
-    name: row['Canvassed by:']
+    name: row['Canvassed by:'].strip
   )
   knock = Knock.create!(
     door: door,
     canvasser: canvasser,
     when: row['Timestamp'],
-    resident_name: "#{row['First Name:']} #{row['Last Name:']}",
-    neighborhood: row['Neighborhood:'],
+    resident_name: "#{row['First Name:'].to_s.strip} #{row['Last Name:'].to_s.strip}".strip,
+    neighborhood: row['Neighborhood:'].strip,
     language: row['What is your preferred language?'],
     race: row['How would you describe your race/ethnicity?'],
     gender: row['What is your self identified gender?'],
