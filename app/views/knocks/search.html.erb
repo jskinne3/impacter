@@ -1,16 +1,11 @@
-<h1>Search knocks</h1>
+<h1>Search</h1>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<style>
-  h3 {margin-bottom: 3px;}
-  a {text-decoration: none;}
-  em {background: yellow;}
-</style>
 
 <%= form_tag(search_knocks_path, method: :get) do %>
   <p>
     <%= text_field_tag :q, params[:q], {placeholder: "Includes text"} %>
-    <%= collection_select(:canvasser, :id, @canvassers, :id, :name, {prompt: 'Canvassed by', selected: (params[:canvasser][:id] if params[:canvasser])}) %>
-    <%= select_tag(:neighborhood, options_for_select(@neighborhoods, params[:neighborhood]), {prompt: 'Neighborhood'}) %>
+    <%= collection_select(:canvasser, :id, @canvassers, :id, :name, {prompt: 'Canvassed by', include_blank: 'Any', selected: (params[:canvasser][:id] if params[:canvasser])}) %>
+    <%= select_tag(:neighborhood, options_for_select(@neighborhoods, params[:neighborhood]), {prompt: 'Neighborhood', include_blank: 'Any'}) %>
   </p>
 
   <%= submit_tag 'Results', name: nil %>
