@@ -17,72 +17,86 @@ def create_questions
   Question.create!(
     main_question_text: '1. Is there something you like about Lincoln, our community, and/or our neighborhood? (CIL POSITIVE)',
     notes_question_text: 'CIL Positive Open Notes: ',
-    description: 'Positive'
+    description: 'Positive',
+    code: 'CILPOS'
   )
   Question.create!(
     main_question_text: '2. What is something you would like to improve, or what is one thing you’d like to change about Lincoln, our community, and/or our neighborhood? (CIL CONCERN)',
     notes_question_text: 'CIL Concern Open Notes: ',
-    description: 'Concern'
+    description: 'Concern',
+    code: 'CILCON'
   )
   Question.create!(
     main_question_text: nil,
     notes_question_text: '3. We’re trying to identify issues that impact people’s lives such as health care, jobs, housing, or anything else that comes to your mind. We’re curious to hear what in your life is an issue that is a challenge for you or those around you?',
-    description: 'Issues'
+    description: 'Issues',
+    code: 'CILOEI'
   )
   Question.create!(
     main_question_text: '4. As we mentioned earlier, we want to hear about issues that impact your life, such as employment and jobs. How do you feel about your current job situation? How does employment impact your life, and those around you?',
     notes_question_text: '4a. Jobs: open notes section',
-    description: 'Job'
+    description: 'Job',
+    code: 'CILJOB'
   )
   Question.create!(
     main_question_text: '5. Another issue we’ve been hearing a lot about is transportation. What’s your experience with getting around in Lincoln?',
     notes_question_text: '5a. Transportation: open notes section',
-    description: 'Transportation'
+    description: 'Transportation',
+    code: 'CILTPT'
   )
   Question.create!(
     main_question_text: '6. Another issue we’ve been hearing about is housing. How do you feel about your housing situation or the housing situation in your neighborhood?',
     notes_question_text: '6a. Housing: open notes section',
-    description: 'Housing'
+    description: 'Housing',
+    code: 'CILHSN'
   )
   Question.create!(
     main_question_text: '7. Have you talked to anyone about the issue that you mentioned earlier-- neighbors, friends, city officials, etc.?',
     notes_question_text: '7a: Who has this individual talked to?',
-    description: 'Contact'
+    description: 'Contact',
+    code: ''
   )
   Question.create!(
     main_question_text: '8. Do you think it would be useful if you contacted the [insert appropriate power structure here] about this issue?',
     notes_question_text: '8A: (above answer was no) What is discouraging you or preventing you from contacting the city/state about this issue? What are those barriers?',
-    description: 'Discouraged'
+    description: 'Discouraged',
+    code: 'CILCPS'
   )
   Question.create!(
     main_question_text: '9. How do you feel places like schools, the city, or churches etc are doing to address your needs? ',
     notes_question_text: 'CIL Confidence in Institutions Open Notes:',
-    description: 'Institutions'
+    description: 'Institutions',
+    code: 'CILCII'
   )
   Question.create!(
     main_question_text: '10. Are there any communities that you are connected to, either in or outside of your neighborhood? What do you do in your spare time?  Examples: schools, church groups, recreational activities, cultural centers, neighborhood associations.',
     notes_question_text: 'CIL Community Member Open Notes:',
-    description: 'Communities'
+    description: 'Communities',
+    code: 'CILCM'
   )
   Question.create!(
     main_question_text: '11.  Are you comfortable having a conversation with newcomers in your neighborhood?',
     notes_question_text: nil,
-    description: 'Newcomers'
+    description: 'Newcomers',
+    code: ''
   )
   Question.create!(
     main_question_text: '12. Would you be interested in learning more about a Community Builder Workshop?',
     notes_question_text: nil,
-    description: 'Workshop'
+    description: 'Workshop',
+    code: ''
   )
   Question.create!(
     main_question_text: '13. Would you be interested in volunteering for neighborhood-specific events (e.g. block party, potluck)? (NVOL)',
     notes_question_text: nil,
-    description: 'Volunteering'
+    description: 'Volunteering',
+    code: ''
   )
   Question.create!(
     main_question_text: 'Internal question: is there any follow up needed with this individual? What issue is it surrounding?',
     notes_question_text: 'Other Notes:',
-    description: 'Notes'
+    description: 'Notes',
+    code: ''
   )
 end
 
@@ -132,21 +146,40 @@ def upload_van
 #    puts "*** #{row['Voter File VANID']}"
 #  end
 
+  codes = Question.all.map{|q| q.code}.uniq
+
   van_file_numeric = 'data/export1668637-2369214289.csv'
   csv_text_numeric = File.read(van_file_numeric)
   csv = CSV.parse(csv_text_numeric, {headers: true, col_sep: "\t"})
   csv.each do |row|
     puts "*** #{row['Voter File VANID']} #{row['ContactName']} #{row['NoteText'].to_s[0..20]}"
+
+    # If the data is broken up with codes, associate it with the correct question
+    notes_text = row['NoteText'].to_s.gsub('ﾒ',"'").gsub(':','') # remove colons to clean codes
+    notes_text_as_array = notes_text.split
+    # Assuming that notes that begin with a code are the only coded ones
+    if codes.include? notes_text_as_array[0].upcase
+      notes_array_sliced = notes_text_as_array.slice_before { |word| codes.include?(word.upcase) }
+      notes_hash = notes_array_sliced.map { |word, *rest| [word, rest.join(' ')] }.to_h
+      puts "---hash: "+notes_hash.inspect
+    else
+    # Otherwise, if the text does not open with a code, add it all to the notes question
+      puts "---text: "+notes_text
+    end
+
   end
-  puts " end answer data ..."
 end
 
+
+#text.to_s.split.slice_before { |word| codes.include?(word) }.map { |word, *rest| [word, rest.join(' ')] }.to_h
+#["text", "for", "first", "item"]
+
 # Run the above-defined functions
-delete_existing
-indexing_on
-create_questions
-upload_non_van
-#upload_van
+#delete_existing
+#indexing_on
+#create_questions
+#upload_non_van
+upload_van
 
 
 
