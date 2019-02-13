@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_01_220723) do
+ActiveRecord::Schema.define(version: 2019_02_12_005000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,10 @@ ActiveRecord::Schema.define(version: 2019_02_01_220723) do
     t.bigint "canvasser_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "vanid"
+    t.integer "dwid"
+    t.string "email"
+    t.string "phone"
     t.index ["canvasser_id"], name: "index_knocks_on_canvasser_id"
     t.index ["door_id"], name: "index_knocks_on_door_id"
   end
@@ -58,7 +62,8 @@ ActiveRecord::Schema.define(version: 2019_02_01_220723) do
     t.string "description"
     t.text "main_question_text"
     t.text "notes_question_text"
-    t.string "code"
+    t.string "van_code"
+    t.string "van_name"
   end
 
   create_table "users", force: :cascade do |t|

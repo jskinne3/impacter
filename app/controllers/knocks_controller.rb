@@ -29,6 +29,7 @@ class KnocksController < ApplicationController
   # GET /knocks/1
   # GET /knocks/1.json
   def show
+    @answers = @knock.answers.reverse
   end
 
   # GET /knocks/new

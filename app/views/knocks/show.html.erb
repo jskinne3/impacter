@@ -3,9 +3,9 @@
 <h1><%= @knock.door.address %></h1>
 <p><%= @knock.canvasser.name %> spoke to <%= @knock.resident_name %> at <%= @knock.when %></p>
 
-<h2>Answers to questions</h2>
+<h2><%= @answers.length %> answers to questions</h2>
 <ul>
-	<% for answer in @knock.answers.reverse %>
+	<% for answer in @answers %>
 	  <li>
       <b><%= answer.question.description %>: </b><%= answer.short_answer %><br />
       <%= answer.notes %>

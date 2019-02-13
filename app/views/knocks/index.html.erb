@@ -2,7 +2,8 @@
 
 <h1>List all knocks</h1>
 
-<%= link_to "Search", search_knocks_path %>
+<%= @knocks.length %> in database |
+<%= link_to "Search knocks", search_knocks_path %>
 
 <table>
   <thead>
