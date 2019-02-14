@@ -12,13 +12,29 @@ class KnocksController < ApplicationController
     # set up search form options
     @canvassers = Canvasser.all
     @neighborhoods = Knock.select(:neighborhood).map(&:neighborhood).uniq
-    @years = (Date.today.year-5..Date.today.year).to_a.reverse
+    @years = (Date.today.year-3..Date.today.year).to_a.reverse
+    @question_descriptions = Question.select(:description, :id).all.map{|e| [e.description, e.id]}
     # if the user is asking for a text search
     unless params[:q].blank?
       results = Answer.search(params[:q])
       @questions = Question.where(id: results.map{|r| r.try(:question_id)}.uniq)
       @answers = results.group_by{|r| r.try(:knock_id)}
-      knock_ids = @answers.map{|id,v| id}
+      knock_ids_from_text_search = @answers.map{|id,v| id}
+    end
+    # if the user is filtering by question description and (optionally) numeric rating
+    unless params[:question].blank?
+      question = Question.find(params[:question])
+      answers = question.answers
+      answers = answers.where("short_answer LIKE :prefix", prefix: "#{params[:rate]}%") unless params[:rate].blank?
+      knock_ids_from_rate_search = answers.map{|e| e.knock_id}
+    end
+    # use intersection of two knock_id lists if they both exist
+    if knock_ids_from_text_search && knock_ids_from_rate_search
+      knock_ids = knock_ids_from_text_search & knock_ids_from_rate_search
+    elsif knock_ids_from_text_search
+      knock_ids = knock_ids_from_text_search
+    elsif knock_ids_from_rate_search
+      knock_ids = knock_ids_from_rate_search
     end
     # build query from what the user has asked for
     @knocks = Knock.all

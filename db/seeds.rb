@@ -136,11 +136,13 @@ def upload_non_van
     for question in Question.all
       main = row[question.main_question_text]
       note = row[question.notes_question_text]
-      knock.answers.create!(
-        short_answer: main,
-        notes: note,
-        question: question
-      )
+      unless main.blank? && note.blank?
+        knock.answers.create!(
+          short_answer: main,
+          notes: note,
+          question: question
+        )
+      end
     end
   end
 end # end of def upload_non_van
