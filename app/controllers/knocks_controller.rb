@@ -24,12 +24,13 @@ class KnocksController < ApplicationController
     end
     # if the user is filtering by question description and (optionally) numeric rating
     unless params[:question].blank?
-      question = Question.find(params[:question])
-      answers = question.answers
+      @question = Question.find(params[:question])
+      answers = @question.answers
       answers = answers.where("short_answer LIKE :prefix", prefix: "#{params[:rate]}%")
       knock_ids_from_rate_search = answers.map{|e| e.knock_id}
       # provide a breakdown of short answers
-      @breakdown = answers.map{|e| e.short_answer}
+      @breakdown = Hash.new(0)
+      answers.map{|e| e.short_answer}.each{|key| @breakdown[key] += 1}
     end
     # use intersection of two knock_id lists if they both exist
     if knock_ids_from_text_search && knock_ids_from_rate_search

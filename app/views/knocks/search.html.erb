@@ -18,7 +18,8 @@
 
   <%= submit_tag 'Results', name: nil %>
 <% end %>
-
+<hr style="margin-top: 15px" />
+<h2><%= @knocks.count %> results</h2>
 <% if @knocks %>
   <figure style="display: flex; flex-wrap: wrap; margin: 40px 0 0 0;">
     <% colors = ['cyan', 'blue', 'green']
@@ -42,14 +43,20 @@
       <div id="piechart<%= demographic %>" style="width: 220px;"></div>
     <% end %>
   </figure>
-  <h2><%= @knocks.count %> results</h2>
   <% if @breakdown %>
-    <h3>Response breakdown</h3>
-    <% frequency_hash = Hash.new(0)
-      @breakdown.each{|key| frequency_hash[key] += 1} %>
-    <% frequency_hash.each do |t,i| %>
-      <%= t %>: <%= i %><br />
-    <% end %>
+    <p>
+      <strong><%= @question.description %> question:</strong><br />
+      <%= @question.main_question_text %>
+    </p>
+    <strong>Answer counts:</strong>
+    <table class="response-breakdown">
+      <% @breakdown.sort_by { |t, i| i }.reverse.each do |t,i| %>
+        <tr><td><%= i %></td><td><%= t %></td></tr>
+      <% end %>
+    </table>
+    <p>
+      <strong><%= @knocks.count %> surveys that answered this question:</strong>
+    </p>
   <% end %>
   <% @knocks.each do |knock| %>
     <p>
