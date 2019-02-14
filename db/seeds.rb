@@ -125,7 +125,7 @@ def upload_non_van
     knock = Knock.create!(
       door: door,
       canvasser: canvasser,
-      when: row['Timestamp'],
+      when: row['Timestamp'].blank? ? nil : Date.strptime(row['Timestamp'], "%m/%d/%Y"),
       resident_name: "#{row['First Name:'].to_s.strip} #{row['Last Name:'].to_s.strip}".strip,
       neighborhood: row['Neighborhood:'].strip,
       language: row['What is your preferred language?'],
@@ -232,6 +232,10 @@ def upload_van_notes
           answer.save
         end
       end
+    end
+    unless row['DateEntered'].blank?
+      knock.when = Date.strptime(row['DateEntered'], "%m/%d/%Y")
+      knock.save
     end
   end
 end

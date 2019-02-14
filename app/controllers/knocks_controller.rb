@@ -12,6 +12,7 @@ class KnocksController < ApplicationController
     # set up search form options
     @canvassers = Canvasser.all
     @neighborhoods = Knock.select(:neighborhood).map(&:neighborhood).uniq
+    @years = (Date.today.year-5..Date.today.year).to_a.reverse
     # if the user is asking for a text search
     unless params[:q].blank?
       results = Answer.search(params[:q])
@@ -24,6 +25,9 @@ class KnocksController < ApplicationController
     @knocks = @knocks.where(id: knock_ids) if knock_ids
     @knocks = @knocks.where(canvasser_id: params[:canvasser][:id]) unless params[:canvasser][:id].blank? if params[:canvasser]
     @knocks = @knocks.where(neighborhood: params[:neighborhood]) unless params[:neighborhood].blank?
+    unless params[:year].blank?
+      @knocks = @knocks.where(when: Date.new(params[:year].to_i)..Date.new(params[:year].to_i).end_of_year)
+    end
   end
 
   # GET /knocks/1

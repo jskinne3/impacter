@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_12_005000) do
+ActiveRecord::Schema.define(version: 2019_02_13_214259) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,7 +45,6 @@ ActiveRecord::Schema.define(version: 2019_02_12_005000) do
     t.string "race"
     t.string "gender"
     t.string "contact"
-    t.string "when"
     t.bigint "door_id"
     t.bigint "canvasser_id"
     t.datetime "created_at", null: false
@@ -54,6 +53,7 @@ ActiveRecord::Schema.define(version: 2019_02_12_005000) do
     t.integer "dwid"
     t.string "email"
     t.string "phone"
+    t.date "when"
     t.index ["canvasser_id"], name: "index_knocks_on_canvasser_id"
     t.index ["door_id"], name: "index_knocks_on_door_id"
   end
