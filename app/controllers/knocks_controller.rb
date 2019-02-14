@@ -14,6 +14,7 @@ class KnocksController < ApplicationController
     @neighborhoods = Knock.select(:neighborhood).map(&:neighborhood).uniq
     @years = (Date.today.year-3..Date.today.year).to_a.reverse
     @question_descriptions = Question.select(:description, :id).all.map{|e| [e.description, e.id]}
+    @intos = ['VAN', 'non-VAN']
     # if the user is asking for a text search
     unless params[:q].blank?
       results = Answer.search(params[:q])
@@ -25,8 +26,10 @@ class KnocksController < ApplicationController
     unless params[:question].blank?
       question = Question.find(params[:question])
       answers = question.answers
-      answers = answers.where("short_answer LIKE :prefix", prefix: "#{params[:rate]}%") unless params[:rate].blank?
+      answers = answers.where("short_answer LIKE :prefix", prefix: "#{params[:rate]}%")
       knock_ids_from_rate_search = answers.map{|e| e.knock_id}
+      # provide a breakdown of short answers
+      @breakdown = answers.map{|e| e.short_answer}
     end
     # use intersection of two knock_id lists if they both exist
     if knock_ids_from_text_search && knock_ids_from_rate_search
@@ -44,6 +47,8 @@ class KnocksController < ApplicationController
     unless params[:year].blank?
       @knocks = @knocks.where(when: Date.new(params[:year].to_i)..Date.new(params[:year].to_i).end_of_year)
     end
+    @knocks = @knocks.where.not(vanid: nil) if params[:into] == 'VAN'
+    @knocks = @knocks.where(vanid: nil) if params[:into] == 'non-VAN'
   end
 
   # GET /knocks/1

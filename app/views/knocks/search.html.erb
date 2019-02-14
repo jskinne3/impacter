@@ -4,7 +4,7 @@
 <%= form_tag(search_knocks_path, method: :get) do %>
   <p>
     <div style="font-size: smaller;">Who knocked when?</div>
-    <%= collection_select(:canvasser, :id, @canvassers, :id, :name, {prompt: 'Canvassed by', include_blank: 'Any', selected: (params[:canvasser][:id] if params[:canvasser])}) %>
+    <%= collection_select(:canvasser, :id, @canvassers, :id, :name, {include_blank: 'Canvassed by', selected: (params[:canvasser][:id] if params[:canvasser])}) %>
     <% # select_tag(:neighborhood, options_for_select(@neighborhoods, params[:neighborhood]), {prompt: 'Neighborhood', include_blank: 'Any'}) %>
     <%= select_tag(:year, options_for_select(@years, params[:year]), {include_blank: 'Year'}) %>
   </p>
@@ -13,6 +13,7 @@
     <%= select_tag(:question, options_for_select(@question_descriptions, params[:question]), {include_blank: 'Question'}) %>
     <%= select_tag(:rate, options_for_select(1..5, params[:rate]), {include_blank: 'Rate'}) %>
     <%= text_field_tag :q, params[:q], {placeholder: "Includes text"} %>
+    <%= select_tag(:into, options_for_select(@intos, params[:into]), {include_blank: 'Into'}) %>
   </p>
 
   <%= submit_tag 'Results', name: nil %>
@@ -42,6 +43,14 @@
     <% end %>
   </figure>
   <h2><%= @knocks.count %> results</h2>
+  <% if @breakdown %>
+    <h3>Response breakdown</h3>
+    <% frequency_hash = Hash.new(0)
+      @breakdown.each{|key| frequency_hash[key] += 1} %>
+    <% frequency_hash.each do |t,i| %>
+      <%= t %>: <%= i %><br />
+    <% end %>
+  <% end %>
   <% @knocks.each do |knock| %>
     <p>
       <h3><%= link_to "#{knock.canvasser.name} knocked #{knock.door.address}", knock %></h3>
