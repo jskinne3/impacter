@@ -64,8 +64,9 @@
   <% end %>
   <% @knocks.each do |knock| %>
     <p>
-      <h3><%= link_to "#{knock.canvasser.name} surveyed #{knock.door.address}, #{knock.neighborhood}", knock %></h3>
-      <%= knock.resident_name %> | <%= knock.gender %> | <%= knock.race %> | <%= knock.when.to_s.split(' ').first %><br />
+      <h3><%= link_to "#{knock.canvasser.name} surveyed #{knock.door.address}", knock %></h3>
+      <%= knock.resident_name %> |
+      <%= knock.gender.blank? ? 'gender blank' : knock.gender %> | <%= knock.race.blank? ? 'race blank' : knock.race %> | <%= knock.when.nil? ? 'date unknown' : knock.when.to_s.split(' ').first %><br />
       <% if @answers %>
         <ul>
           <% for answer in @answers[knock.id] %>

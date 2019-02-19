@@ -51,6 +51,7 @@ class KnocksController < ApplicationController
     end
     @knocks = @knocks.where.not(vanid: nil) if params[:into] == 'VAN'
     @knocks = @knocks.where(vanid: nil) if params[:into] == 'non-VAN'
+    @knocks = @knocks.includes(:door, :canvasser).order(:resident_name)
   end
 
   # GET /knocks/1
