@@ -13,7 +13,11 @@
     <%= select_tag(:question, options_for_select(@question_descriptions, params[:question]), {include_blank: 'Question'}) %>
     <%= select_tag(:rate, options_for_select(1..5, params[:rate]), {include_blank: 'Rate'}) %>
     <%= text_field_tag :q, params[:q], {placeholder: "Includes text"} %>
-    <%= select_tag(:into, options_for_select(@intos, params[:into]), {include_blank: 'Into'}) %>
+  </p>
+  <p>
+    <div style="font-size: smaller;">Where was data stored?</div>
+    <%= select_tag(:into, options_for_select(@intos, params[:into]), {include_blank: 'Entered in'}) %>
+    <%= text_field_tag :vanid, params[:vanid], {placeholder: "VAN id", style: "width: 55px;"} %>
   </p>
 
   <%= submit_tag 'Results', name: nil %>

@@ -45,6 +45,7 @@ class KnocksController < ApplicationController
     @knocks = @knocks.where(id: knock_ids) if knock_ids
     @knocks = @knocks.where(canvasser_id: params[:canvasser][:id]) unless params[:canvasser][:id].blank? if params[:canvasser]
     @knocks = @knocks.where(neighborhood: params[:neighborhood]) unless params[:neighborhood].blank?
+    @knocks = @knocks.where(vanid: params[:vanid]) unless params[:vanid].blank?
     unless params[:year].blank?
       @knocks = @knocks.where(when: Date.new(params[:year].to_i)..Date.new(params[:year].to_i).end_of_year)
     end

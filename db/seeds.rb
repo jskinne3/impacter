@@ -242,6 +242,23 @@ def upload_van_notes
   end
 end
 
+def add_jewel_ids
+  puts "add Jewel ids"
+  jewel_vanids = [1596319, 693282, 696961, 1542288, 699594, 705839, 46732, 717014, 1666135, 1298865, 727648, 1363592, 2192397, 744246, 750256, 750257, 751313, 755754, 760980, 774468, 775607, 2027980, 1039046, 2107253, 785780, 795049, 794311, 803349, 805198, 823808, 846383, 826816, 828404, 1743814, 834049, 842023, 849577]
+  jewel = Canvasser.where(name: 'Jewel').first
+  if jewel
+    for vanid in jewel_vanids
+      k = Knock.where(vanid: vanid).first
+      if k
+        k.canvasser = jewel
+        puts "saved #{k.resident_name}" if k.save
+      else
+        puts "###### No knock of that vanid"
+      end
+    end
+  end
+end
+
 # Stuff to add to VAN data export as of 13 Feb 2019:
 # Canvasser: Notes List -> Customize Export -> Include Canvasser Status
 # precincts
@@ -251,12 +268,13 @@ end
 # CIL Up to Date
 
 # Run the above-defined functions
-delete_existing
-indexing_on
-create_questions
-upload_non_van
-upload_van_numeric
-upload_van_notes
+#delete_existing
+#indexing_on
+#create_questions
+#upload_non_van
+#upload_van_numeric
+#upload_van_notes
+add_jewel_ids
 
 
 
