@@ -52,6 +52,16 @@ class KnocksController < ApplicationController
     @knocks = @knocks.where.not(vanid: nil) if params[:into] == 'VAN'
     @knocks = @knocks.where(vanid: nil) if params[:into] == 'non-VAN'
     @knocks = @knocks.includes(:door, :canvasser).order(:resident_name)
+    # Provide a breakdown of responses if the user filters by a certain question
+    unless params[:question].blank?
+      answers = []
+      # All the answer for the user-selected question within the returned knocks
+      for knock in @knocks
+        answers << knock.answers.where(question: @question)
+      end
+      @breakdown = Hash.new(0)
+      answers.flatten.map{|e| e.short_answer}.each{|key| @breakdown[key] += 1}
+    end
   end
 
   # GET /knocks/1

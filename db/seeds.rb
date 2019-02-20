@@ -1,4 +1,5 @@
 require 'csv'
+require 'pp'
 
 def delete_existing
   Answer.delete_all
@@ -236,6 +237,9 @@ def upload_van_notes
       end
     end
     unless row['DateEntered'].blank?
+      # Weird because I'm re-saving the date once per note.
+      # A few doors were surveyed twice in different years, so, this can end up wrong.
+      # Also, it means that knocks without notes get no date !!
       knock.when = Date.strptime(row['DateEntered'], "%m/%d/%Y")
       knock.save
     end
@@ -259,6 +263,38 @@ def add_jewel_ids
   end
 end
 
+def update_dates
+  puts "update_dates"
+  van_file_numeric = 'data/export1668637-2369214289.csv'
+  csv = CSV.read(van_file_numeric, headers: true, col_sep: "\t", :encoding => 'windows-1251:utf-8')
+
+  # Collect all dates and organize by VANid
+  hash = {}
+  csv.each do |row|
+    hash[row['Voter File VANID']] ||= []
+    date = Date.strptime(row['DateEntered'], "%m/%d/%Y")
+    hash[row['Voter File VANID']] << date
+  end
+
+  # Use the latest date for each VANid, discarding earlier ones
+  h = hash.map{|k,v| [k, v.sort[-1]]}.to_h
+  
+  h.each do |k, v|
+    knock = Knock.where(vanid: k).first
+    knock.when = v
+    if knock.save
+      puts "#{k} #{v}"
+    else
+      puts "=========== didn't save ==========="
+    end
+  end
+  
+  #pp h
+  #puts csv.map{|e| e['Voter File VANID']}.length
+  #puts csv.map{|e| e['Voter File VANID']}.uniq.length
+  puts "FINISHED ***************"
+end
+
 # Stuff to add to VAN data export as of 13 Feb 2019:
 # Canvasser: Notes List -> Customize Export -> Include Canvasser Status
 # precincts
@@ -274,7 +310,8 @@ end
 #upload_non_van
 #upload_van_numeric
 #upload_van_notes
-add_jewel_ids
+#add_jewel_ids
+update_dates
 
 
 

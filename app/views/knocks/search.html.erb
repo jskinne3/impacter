@@ -59,7 +59,7 @@
       <% end %>
     </table>
     <p>
-      <strong><%= @knocks.count %> surveys that answered this question:</strong>
+      <strong><%= @breakdown.map{|k,v| v}.sum %> surveys that answered this question:</strong>
     </p>
   <% end %>
   <% @knocks.each do |knock| %>
