@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :knocks do
     collection do
       get 'search'
+      get 'report'
 	end
   end
   resources :users

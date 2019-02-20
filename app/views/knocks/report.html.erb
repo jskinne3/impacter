@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Report</h1>
+
+<p>
+  Surveys in database completed by: <%= @canvassers.map{|c| c.name}.join(', ') %>
+</p>
+<p>
+  <% dates = @knocks.map{|k| k.when} %>
+  Between dates: <%= dates.min %> and <%= dates.max %>
+</p>
+<p>
+  Completed surveys found: <%= @knocks.count %>
+</p>
+
+<% for question in @questions %>
+  <h3><%= question.main_question_text %></h3>
+  <%
+    answers = @answers.where(question: question)
+    breakdown = Hash.new(0)
+    answers.map{|e| e.short_answer}.each{|key| breakdown[key] += 1}
+
+    rows = breakdown.map{|k,v| "<td>#{k}</td><td>#{v}</td>"}
+    rows.sort!
+  %>
+  <table>
+    <% for row in rows %>
+      <tr><%= row.html_safe %></tr>
+    <% end %>
+  </table>
+<% end %>
+

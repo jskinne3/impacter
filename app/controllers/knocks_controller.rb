@@ -64,6 +64,15 @@ class KnocksController < ApplicationController
     end
   end
 
+  def report
+    canvasser_names = ['Jewel', 'Isabel', 'Isabel/Allie']
+    @canvassers = Canvasser.where(name: canvasser_names)
+    @knocks = Knock.where(canvasser: @canvassers)
+    @knocks = @knocks.where(when: Date.new(2018)..Date.new(2018).end_of_year)
+    @questions = Question.all
+    @answers = Answer.where(knock: @knocks)
+  end
+
   # GET /knocks/1
   # GET /knocks/1.json
   def show
