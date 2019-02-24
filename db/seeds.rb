@@ -246,53 +246,22 @@ def upload_van_notes
   end
 end
 
-def add_jewel_ids
-  puts "add Jewel ids"
-  jewel_vanids = [1596319, 693282, 696961, 1542288, 699594, 705839, 46732, 717014, 1666135, 1298865, 727648, 1363592, 2192397, 744246, 750256, 750257, 751313, 755754, 760980, 774468, 775607, 2027980, 1039046, 2107253, 785780, 795049, 794311, 803349, 805198, 823808, 846383, 826816, 828404, 1743814, 834049, 842023, 849577]
-  jewel = Canvasser.where(name: 'Jewel').first
-  if jewel
-    for vanid in jewel_vanids
+def add_vanids(name, vanids)
+  puts "adding #{vanids.length} VANids, #{vanids.uniq.length} unique, for #{name}"
+  canvasser = Canvasser.where(name: name).first
+  if canvasser
+    for vanid in vanids
       k = Knock.where(vanid: vanid).first
       if k
-        k.canvasser = jewel
+        k.canvasser = canvasser
         puts "saved #{k.resident_name}" if k.save
       else
-        puts "###### No knock of that vanid"
+        puts "###### No knock of that VANid"
       end
     end
+  else
+    puts "Canvasser record not found"
   end
-end
-
-def update_dates
-  puts "update_dates"
-  van_file_numeric = 'data/export1668637-2369214289.csv'
-  csv = CSV.read(van_file_numeric, headers: true, col_sep: "\t", :encoding => 'windows-1251:utf-8')
-
-  # Collect all dates and organize by VANid
-  hash = {}
-  csv.each do |row|
-    hash[row['Voter File VANID']] ||= []
-    date = Date.strptime(row['DateEntered'], "%m/%d/%Y")
-    hash[row['Voter File VANID']] << date
-  end
-
-  # Use the latest date for each VANid, discarding earlier ones
-  h = hash.map{|k,v| [k, v.sort[-1]]}.to_h
-  
-  h.each do |k, v|
-    knock = Knock.where(vanid: k).first
-    knock.when = v
-    if knock.save
-      puts "#{k} #{v}"
-    else
-      puts "=========== didn't save ==========="
-    end
-  end
-  
-  #pp h
-  #puts csv.map{|e| e['Voter File VANID']}.length
-  #puts csv.map{|e| e['Voter File VANID']}.uniq.length
-  puts "FINISHED ***************"
 end
 
 # Stuff to add to VAN data export as of 13 Feb 2019:
@@ -310,9 +279,27 @@ end
 #upload_non_van
 #upload_van_numeric
 #upload_van_notes
-#add_jewel_ids
-update_dates
+#update_dates
+#add_vanis('Jewel', [1596319, 693282, 696961, 1542288, 699594, 705839, 46732, 717014, 1666135, 1298865, 727648, 1363592, 2192397, 744246, 750256, 750257, 751313, 755754, 760980, 774468, 775607, 2027980, 1039046, 2107253, 785780, 795049, 794311, 803349, 805198, 823808, 846383, 826816, 828404, 1743814, 834049, 842023, 849577])
 
+add_vanids('José Lemus', [
+705927, 260793, 684230, 685536, 1817783, 687450, 687521, 689128, 690567, 691285, 693021, 693022, 2096540, 2096541, 694556, 2192078, 2134091, 1810163, 700989, 2168587, 705168, 707355, 707468, 736890, 710561, 2053144, 714668, 717741, 1543102, 724001, 1559233, 737115, 744544, 2182854, 1598175, 746236, 746727, 748914, 749888,
+2182854, 1598175, 746236, 746236, 748914, 749888, 752592, 755889, 755890, 756911, 923193, 762835, 762838, 763058, 763633, 766398, 1469596, 1296793, 1239257, 768405, 1734436, 1598811, 1448551, 1790374, 987601, 778587, 783898, 784438, 785240, 2170135, 1704604, 2147254, 1546475, 791744, 796661, 797346, 2065115, 2082191, 798811,
+804702, 805031, 805318, 805504, 805959, 805963, 806329, 807836, 562815, 989381, 811594, 811756, 811785, 1905162, 1547391, 1547404, 814580, 815034, 817202, 1835834, 820942, 823179, 824560, 2226938, 830062, 837969, 838022, 838728, 2095281, 841450, 1548620, 2039822, 843190, 843622, 845137, 1726199, 846446, 848070, 2075303, 849264
+])
 
+add_vanids('Selina Martinez', [
+1859668, 139983, 708191, 709098, 709107, 2210942, 720574, 712213, 846728, 728778, 731678, 739081, 743442, 745269, 746446, 2071061, 748795, 1544524, 750904, 755755, 763776, 770146, 770985, 2007567, 772501, 774455, 775036, 777768, 779574, 1328622, 2073799, 773704, 786861, 789866, 791131, 792756, 794033, 796914, 798631,
+2041818, 813601, 813605, 2252378, 990255, 829131, 834504, 531883, 125009, 1697477, 842221, 843949
+])
 
+add_vanids('Damali and Natasha', [
+694166, 712165, 718528, 721646, 770236, 776780, 1297335
+])
 
+add_vanids('Damali Britton', [
+809448, 695233, 1686724, 700357, 720516, 1449359, 841746, 763780, 770933, 1556200, 793300, 789563, 803505, 817952, 2252545, 837576, 848929
+])
+
+# VANids I've encountered that are in VAN as knocked but aren't in db
+# 1297335 776780
