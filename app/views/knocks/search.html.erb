@@ -66,7 +66,7 @@
     <p>
       <h3><%= link_to "#{knock.canvasser.name} surveyed #{knock.door.address}", knock %></h3>
       <%= knock.resident_name %> |
-      <%= knock.gender.blank? ? 'gender blank' : knock.gender %> | <%= knock.race.blank? ? 'race blank' : knock.race %> | <%= knock.when.nil? ? 'date unknown' : knock.when.to_s.split(' ').first %><br />
+      <%= knock.gender.blank? ? 'gender blank' : knock.gender %> | <%= knock.race.blank? ? 'race blank' : knock.race %> | <%= knock.when.nil? ? "date unknown #{knock.vanid}" : knock.when.to_s.split(' ').first %><br />
       <% if @answers %>
         <ul>
           <% for answer in @answers[knock.id] %>
