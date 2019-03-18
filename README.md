@@ -1,24 +1,17 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Impacter is a deep canvassing tool. Use it to record and analyze citizen stories.
 
-Things you may want to cover:
+Built with Ruby on Rails and ElasticSearch.
 
-* Ruby version
+Versions:
 
-* System dependencies
+* Ruby 2.5.3
 
-* Configuration
+* Rails 5.2.2
 
-* Database creation
+* ElasticSearch version 6.5.1
 
-* Database initialization
+Tips:
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* `rm /usr/local/var/postgres/postmaster.pid` if db can't connect
