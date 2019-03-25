@@ -65,7 +65,7 @@ class KnocksController < ApplicationController
   end
 
   def report
-    canvasser_names = ['José Lemus']
+    canvasser_names = ["Raul + Ellie Roselius", "Damali Britton", "Damali and Natasha", "Selina", "Raul", "Raul Noguera-McElroy", "Selina Martinez"]
     @canvassers = Canvasser.where(name: canvasser_names)
     @knocks = Knock.where(canvasser: @canvassers)
     @knocks = @knocks.where(when: Date.new(2018)..Date.new(2018).end_of_year)
