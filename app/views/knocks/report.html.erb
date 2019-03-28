@@ -1,3 +1,7 @@
+<style>
+  tr:nth-child(odd) {background-color: #f2f2f2}
+</style>
+
 <p id="notice"><%= notice %></p>
 
 <h1>Report</h1>
@@ -14,7 +18,7 @@
 </p>
 
 <% for question in @questions %>
-  <h3><%= question.main_question_text %></h3>
+  <h3><%= question.main_question_text ? question.main_question_text : question.notes_question_text %></h3>
   <%
     answers = @answers.where(question: question)
     breakdown = Hash.new(0)
