@@ -339,7 +339,7 @@ def add_final_van_ids
       k = Knock.where(vanid: vanid).first
       if k
         k.canvasser = canvasser
-        k.when = Date.strptime(date, "%m/%d/%y")
+        k.when = Date.strptime(date, "%m/%d/%Y")
         k.save
       else
         puts "knock not found: #{vanid}"
