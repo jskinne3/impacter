@@ -1,3 +1,15 @@
+<style>
+  input, select, textarea {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 5px;
+  }
+  form, h1 {
+    padding: 10px;
+  }
+</style>
+
 <%= form_with(model: knock, local: true) do |form| %>
   <% if knock.errors.any? %>
     <div id="error_explanation">
@@ -12,6 +24,37 @@
   <% end %>
 
   <div class="actions">
-    <%= form.submit %>
+    <p>
+      Resident name<br />
+      <%= form.text_field :resident_name %>
+    </p>
+    <p>
+      Neighborhood<br />
+      <%= form.select :neighborhood, @neighborhoods, include_blank: true %>
+    </p>
+    <p>
+      Gender<br />
+      <%= form.text_field :gender %>
+    </p>
+    <p>
+      Race<br />
+      <%= form.text_field :race %>
+    </p>
+    
+
+    <% for question in Question.all %>
+      <p>
+        <%= question.main_question_text %><br />
+        <%= form.text_field :testq %>
+      </p><p>
+        <%= question.notes_question_text %><br />
+        <%= form.text_area :testq %>
+      </p>
+    <% end %>
+
+
+    <p>
+      <%= form.submit 'Create' %>
+    </p>
   </div>
 <% end %>

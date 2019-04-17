@@ -1,0 +1,39 @@
+<style>
+  input, select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 5px;
+  }
+  form, h1 {
+    padding: 10px;
+  }
+</style>
+
+<%= form_with(model: door, local: true) do |form| %>
+  <% if door.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(door.errors.count, "error") %> prohibited this door from being saved:</h2>
+
+      <ul>
+      <% door.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <p>
+      Address<br />
+      <%= form.text_field :address %>
+    </p>
+    <p>
+      Zip code<br />
+      <%= form.select :zip, @zips, include_blank: true %>
+    </p>
+    <p>
+      <%= form.submit 'Survey' %> <%= form.submit 'Conversation' %>
+    </p>
+  </div>
+<% end %>

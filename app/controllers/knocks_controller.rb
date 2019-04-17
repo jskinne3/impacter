@@ -11,7 +11,7 @@ class KnocksController < ApplicationController
   def search
     # set up search form options
     @canvassers = Canvasser.all
-    @neighborhoods = Knock.select(:neighborhood).map(&:neighborhood).uniq
+    #@neighborhoods = Knock.select(:neighborhood).map(&:neighborhood).uniq
     @years = (Date.today.year-3..Date.today.year).to_a.reverse
     @question_descriptions = Question.select(:description, :id).all.map{|e| [e.description, e.id]}
     @intos = ['VAN', 'non-VAN']
@@ -83,6 +83,7 @@ class KnocksController < ApplicationController
   # GET /knocks/new
   def new
     @knock = Knock.new
+    @neighborhoods = Knock.select(:neighborhood).map(&:neighborhood).compact.uniq
   end
 
   # GET /knocks/1/edit
