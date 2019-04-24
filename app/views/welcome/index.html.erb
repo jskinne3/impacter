@@ -1,0 +1,23 @@
+<h1>Impacter</h1>
+<% if user_signed_in? %>
+  <%= link_to('Knock', new_door_path) %> |
+  <%= link_to('Search', "knocks/search") %>
+<% else %>
+  <%= link_to('Sign in', new_user_session_path)  %> |
+  <%= link_to('Sign up', :beta) %>
+<% end %>
+
+<p>
+  Impacter is a tool for deep canvassing and community listening. It allows canvassers to record citizen stories. It analyzes results and facilitates understanding.
+</p>
+<ul>
+  <li>Record citizen stories as told to canvassers</li>
+  <li>Search and make sense of unstructured data</li>
+  <li>Data visualizations on the fly</li>
+  <li>VAN and State Voices integration</li>
+  <li>Data security for greater citizen trust</li>
+</ul>
+<p>
+  Impacter is an open-source tool built with Ruby on Rails, PostgreSQL, and ElasticSearch. It's free for anyone to use.
+</p>
+
