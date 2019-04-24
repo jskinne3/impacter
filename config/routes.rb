@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   devise_for :users
-  root to: 'knocks#search'
+  root to: 'welcome#index'
 
   resources :knocks do
     collection do
@@ -11,5 +11,8 @@ Rails.application.routes.draw do
   end
   resources :users
   resources :doors
+
+
+get 'beta', action: :beta, controller: :welcome
 
 end
