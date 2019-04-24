@@ -14,10 +14,183 @@
  *= require_self
  */
 
-html, body {font-family: Helvetica;}
+html, body {
+  font-family: Helvetica;
+  margin: 0;
+}
 h3 {margin-bottom: 3px;}
+h1 {font-weight: normal; margin-top: 0;}
 a {text-decoration: none;}
 em {background: yellow;}
 th {text-align: left;}
 .response-breakdown td {padding: 0;}
 .response-breakdown td:first-child {text-align: right; padding-right: 7px;}
+
+#logo {
+	font-family: Righteous;
+  text-transform: uppercase;
+  background-color: #022344;
+  font-size: 10vw;
+  text-align: center;
+}
+#logo a {
+  color: white;
+}
+header, section {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+}
+main, header {
+  margin: 0 3vw 0 3vw;
+}
+.one-third {
+  flex: 1;
+  margin-bottom: 3vw;
+}
+.two-thirds {
+  flex: 2;
+  margin-bottom: 3vw;
+}
+.one-third, .two-thirds {
+  background-color: #eaedf2;
+}
+.padded {
+  padding: 3vw;
+}
+#signin-signup {
+  background-color: #3aa5bc;
+}
+#signin-signup a {
+  display: block;
+  border: 1px solid #af802d;
+  padding: 2vw;
+  max-width: 60vw;
+  margin: 0 auto;
+  margin-top: 6vw;
+  margin-bottom: 6vw;
+  text-align: center;
+  background-color: #f0ae3b;
+  color: white;
+  font-size: larger;
+}
+#signin-signup a:hover {
+  background-color: #f2a218;
+}
+.flexfig {
+  display: flex;
+  background-color: white;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: flex-start;
+  margin: 0;
+  box-shadow: 3px 3px 8px 3px #888888;
+}
+ul {
+  padding-left: 6vw;
+}
+.dark {
+  background-color: #022344;
+  color: white;
+}
+.dark a {
+  color: silver;
+}
+nav {
+  text-align: center;
+  color: orange;
+}
+#street {
+  background-image: url("street.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  min-height: 90vw;
+  color: white;
+  text-shadow: 2px 2px black;
+}
+.script {
+  font-family: Lobster;
+}
+.block {
+  font-family: Acme;
+  text-transform: uppercase;
+}
+.highlight {
+  font-size: larger;
+  color: #af802d;
+  font-weight: normal;
+}
+#street .script {
+  font-size: 20vw;
+}
+#street .block {
+  font-size: 12vw;
+}
+.revorder-a {
+  order: 1;
+}
+.revorder-b {
+  order: 2;
+}
+.field, .new_user {
+  margin-bottom: 2vw;
+}
+.new_user input {
+    padding: 2vw;
+    background-color: #eaedf2;
+  }
+
+@media all and (min-width: 550px) {
+  header, section, #contact-holder { 
+    -webkit-flex-direction: row;
+    flex-direction: row;
+  }
+  nav {
+    text-align: right;
+  }
+  #logo {
+    text-align: left;
+    font-size: larger;
+  }
+  #signin-signup a {
+    max-width: 12vw;
+  }
+  ul {
+    padding-left: 2vw;
+  }
+  #street {
+    min-height: 5vw;
+  }
+  #street .script {
+    font-size: 4.5vw;
+  }
+  #street .block {
+    font-size: 3vw;
+  }
+  .revorder-a {
+    order: 2;
+  }
+  .revorder-b {
+    order: 1;
+  }
+  .field, .new_user {
+    margin-bottom: 1vw;
+  }
+  .new_user input {
+    padding: 1vw;
+  }
+  main, header {
+    margin: 0 1vw 0 1vw;
+  }
+  .one-third:first-child, .two-thirds:first-child {
+    margin-right: 1vw;
+  }
+  .one-third {
+    margin-bottom: 1vw;
+  }
+  .two-thirds {
+    margin-bottom: 1vw;
+  }
+}

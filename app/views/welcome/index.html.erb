@@ -1,23 +1,78 @@
-<h1>Impacter</h1>
-<% if user_signed_in? %>
-  <%= link_to('Knock', new_door_path) %> |
-  <%= link_to('Search', "knocks/search") %>
-<% else %>
-  <%= link_to('Sign in', new_user_session_path)  %> |
-  <%= link_to('Sign up', :beta) %>
-<% end %>
+<section class="flexsec">
+  <div class="two-thirds padded">
+    <p>
+      Impacter is a tool for <strong class="script highlight">deep canvassing & listening.</strong> It allows canvassers to record citizen stories. Impacter analyzes results and facilitates understanding of communities and residents.
+    </p>
+    <figure class="flexfig">
+      <%= image_tag 'dataview2.png' %>
+      <%= image_tag 'dataview1.png' %>
+    </figure>
+  </div>
+  <div class="one-third block" id="signin-signup">
+    <% if user_signed_in? %>
+      <%= link_to('Knock', new_door_path) %>
+      <%= link_to('Search', "knocks/search") %>
+    <% else %>
+      <%= link_to('Sign in', new_user_session_path)  %>
+      <%= link_to('Sign up', :beta) %>
+    <% end %>
+  </div>
+</section>
 
-<p>
-  Impacter is a tool for deep canvassing and community listening. It allows canvassers to record citizen stories. It analyzes results and facilitates understanding.
-</p>
-<ul>
-  <li>Record citizen stories as told to canvassers</li>
-  <li>Search and make sense of unstructured data</li>
-  <li>Data visualizations on the fly</li>
-  <li>VAN and State Voices integration</li>
-  <li>Data security for greater citizen trust</li>
-</ul>
-<p>
-  Impacter is an open-source tool built with Ruby on Rails, PostgreSQL, and ElasticSearch. It's free for anyone to use.
-</p>
+<section class="flexsec">
+  <div class="one-third padded revorder-b">
+    <ul>
+      <li>Record citizen narratives</li>
+      <li>Make sense of unstructured data</li>
+      <li>Visualize data on the fly</li>
+      <li>Full-text stemming search</li>
+      <li>VAN and State Voices integration</li>
+      <li>Data security for citizen trust</li>
+    </ul>
+  </div>
+  <div id="street" class="two-thirds padded revorder-a">
+    <div class="script">Listen to the voices</div>
+    <div class="block">of your community</div>
+  </div>
+</section>
 
+<section class="flexsec">
+  <div class="two-thirds padded">
+    <figure class="flexfig">
+      <%= image_tag 'dataview3.png' %>
+      <%= image_tag 'dataview4.png' %>
+    </figure>
+    <p>
+      Collect unstructured data <strong class="script highlight">with confidence.</strong>
+    </p>
+    <p>
+      Impacter organizes free-form data from community surveys in all it's messy, real-world glory
+    </p>
+  </div>
+  <div class="one-third padded dark">
+    <h2 class="" style="font-family: Acme; text-transform: uppercase;">
+      Free
+      <span class="script highlight" style="margin-left: 3px;">&amp;</span> 
+      open source
+    </h2>
+    <p>
+      Impacter is an open-source tool built with Ruby on Rails, PostgreSQL, and ElasticSearch.
+    </p>
+    </p>
+      It's free for anyone to beta test.
+    </p>
+    <p>
+      <%= link_to('Sign up', :beta) %>
+    </p>
+    <p>
+      <%= link_to 'Github', 'https://github.com/jskinne3/impacter' %>
+    </p>
+    <p>
+      <%= link_to 'Twitter', 'https://twitter.com/jskilesskinner' %>
+    </p>
+
+    <p style="margin-top: 20vh;">
+      MIT License <span style="color: orange;"><%= Time.current.year %></span>
+    </p>
+  </div>
+</section>
