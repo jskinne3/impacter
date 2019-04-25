@@ -2,6 +2,8 @@
 
 Impacter is a deep canvassing tool for recording and analyzing citizen stories. It was originally built for data from Lincoln, Nebraska neighborhoods. It uses Ruby on Rails, PostgreSQL, and ElasticSearch.
 
+[impacter.herokuapp.com](https://impacter.herokuapp.com/)
+
 ## Versions
 
 * Ruby 2.5.3
