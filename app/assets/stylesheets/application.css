@@ -99,10 +99,12 @@ ul {
 }
 nav {
   text-align: center;
+}
+nav span {
   color: orange;
 }
 #street {
-  background-image: url("street.jpg");
+
   background-position: center center;
   background-repeat: no-repeat;
   background-size: 100%;
