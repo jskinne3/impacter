@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'beta_users/new'
+  get 'beta_users/create'
   devise_for :users
   root to: 'welcome#index'
 
@@ -11,8 +13,8 @@ Rails.application.routes.draw do
   end
   resources :users
   resources :doors
+  resources :beta_users
 
-
-get 'beta', action: :beta, controller: :welcome
+  get 'signup', action: :new, controller: :beta_users
 
 end

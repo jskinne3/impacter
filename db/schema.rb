@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_13_214259) do
+ActiveRecord::Schema.define(version: 2019_04_25_183152) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,13 @@ ActiveRecord::Schema.define(version: 2019_02_13_214259) do
     t.bigint "knock_id"
     t.index ["knock_id"], name: "index_answers_on_knock_id"
     t.index ["question_id"], name: "index_answers_on_question_id"
+  end
+
+  create_table "beta_users", force: :cascade do |t|
+    t.string "email"
+    t.text "goals"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "canvassers", force: :cascade do |t|

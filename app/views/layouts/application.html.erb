@@ -23,13 +23,13 @@
           <%= current_user.email %> <span>|</span>
           <%= link_to('Logout', destroy_user_session_path, method: :delete) %>        
         <% else %>
-          <%= link_to 'Sign up', :beta %> <span>|</span>
+          <%= link_to 'Sign up', :signup %> <span>|</span>
           <%= link_to('Sign in', new_user_session_path)  %>  
         <% end %>
       </nav>
     </header>
     <% if notice || alert %>
-      <section class="padded">
+      <section id="flash" class="padded">
         <p class="notice"><%= notice %></p>
         <p class="alert"><%= alert %></p>
       </section>

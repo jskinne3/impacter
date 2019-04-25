@@ -7,7 +7,6 @@ class DoorsController < ApplicationController
   end
 
   def create
-    puts "======================= #{params[:commit]}"
     if params[:commit] == 'Survey'
       redirect_to controller: 'knocks', action: 'new'
     else

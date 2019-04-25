@@ -139,10 +139,23 @@ nav span {
 .field, .new_user {
   margin-bottom: 2vw;
 }
-.new_user input {
-    padding: 2vw;
-    background-color: #eaedf2;
-  }
+.new_user input, #signup input, #signup textarea {
+  padding: 2vw;
+  background-color: #FFFDEA;
+}
+#signup textarea {
+  min-width: 80vw;
+  min-height: 20vh;
+}
+#flash {
+  color: white;
+}
+#flash .notice {
+  background-color: green;
+}
+#flash .alert {
+  background-color: red;
+}
 
 @media all and (min-width: 550px) {
   header, section, #contact-holder { 
@@ -180,7 +193,7 @@ nav span {
   .field, .new_user {
     margin-bottom: 1vw;
   }
-  .new_user input {
+  .new_user input, #signup input {
     padding: 1vw;
   }
   main, header {
@@ -194,5 +207,8 @@ nav span {
   }
   .two-thirds {
     margin-bottom: 1vw;
+  }
+  #signup textarea {
+    min-width: 40vw;
   }
 }

@@ -1,0 +1,27 @@
+<%= form_with(model: beta_user, local: true) do |form| %>
+  <% if beta_user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(beta_user.errors.count, "error") %> prohibited this beta user from being saved:</h2>
+
+      <ul>
+      <% beta_user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <p>
+      E-mail<br />
+      <%= form.text_field :email %>
+    </p>
+    <p>
+      Describe your goals for your project<br />
+      <%= form.text_area :goals %>
+    </p>
+    <p>
+      <%= form.submit 'Sign up' %>
+    </p>
+  </div>
+<% end %>

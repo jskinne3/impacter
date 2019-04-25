@@ -1,0 +1,27 @@
+<h1>List all beta users</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>email</th>
+      <th>goals</th>
+      <th>created</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @beta_users.each do |bu| %>
+      <tr>
+        <td><%= bu.id %></td>
+        <td><%= bu.email %></td>
+        <td><%= bu.goals %></td>
+        <td><%= bu.created_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<p>
+  <%= link_to 'Create beta user', new_beta_user_path %>
+</p>
