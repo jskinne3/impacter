@@ -157,7 +157,7 @@ nav span {
   background-color: red;
 }
 
-@media all and (min-width: 550px) {
+@media all and (min-width: 600px) {
   header, section, #contact-holder { 
     -webkit-flex-direction: row;
     flex-direction: row;
